@@ -6,17 +6,18 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/13 14:56:40 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/13 19:13:52 by lomasse          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tga_reader.h"
 
-int		hexdump(int fd)
+char	*hexdump(int fd)
 {
 	char	buf[16];
 	int		stored;
 	int		i;
+	int		j;
 	char	*str[10000];
 
 	j = 0;
@@ -36,7 +37,7 @@ int		hexdump(int fd)
 		j++;
 		printf("\n");
 	}
-	return ((stored != -1) ? str : 0);
+	return ((stored != -1) ? *str : NULL);
 }
 
 int		count_n_malloc(t_tga tga, char *str)
@@ -55,7 +56,7 @@ int		count_n_malloc(t_tga tga, char *str)
 		c = (buff == '\n') ? 0 : c;
 		i++;
 	}
-	if (!(tga->file = (int *)malloc(sizeof(int ) *  count_line * 16)))
+	if (!(tga.file = (int *)malloc(sizeof(int ) *  count_line * 16)))
 		printf("error malloc\n");
 	return (0);
 }
@@ -63,7 +64,7 @@ int		count_n_malloc(t_tga tga, char *str)
 int		get_data_tga(t_tga tga, const char *path)
 {
 	int		fd;
-	struct	statsts;
+	struct	stat sts;
 	char	*str;
 	int		i;
 
@@ -82,7 +83,7 @@ int		get_data_tga(t_tga tga, const char *path)
 	while (get_next_line(fd, &str) > 0)
 	{
 		if (ft_strlen((const char *) str) > 10)
-			hex_to_dec(env, split_space(cut_png_info(str)));
+			hex_to_dec(tga, split_space(cut_png_info(str)));
 		free(str);
 		i++;
 	}
@@ -96,14 +97,4 @@ int		tga_load(t_tga tga, const char *path)
 {
 	get_data_tga(tga, path);
 	return (0);
-}
-
-int		main(int ac, char **av)
-{
-	if (ac == 2)
-	{
-		if 
-			tga_load(tga, av[1]);
-	}
-	return (1);
 }
