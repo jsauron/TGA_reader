@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/13 14:05:43 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/13 14:47:11 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 # define TGA_READER_H
 
 #include <stdio.h>
+#include <libft.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
 typedef struct s_tga		t_tga;
 
 struct			s_tga
 {
+	char	*str;
 	int		*file;
 	int		nb_elem;
 	int		w;
@@ -30,5 +34,6 @@ struct			s_tga
 	int			alpha;
 	int			len_cm;						 // number of colours in palette
 };
+
 
 #endif
