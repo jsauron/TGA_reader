@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/14 11:55:39 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/14 14:58:04 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ int			read_hdr(t_tga *tga, int fd)
 
 	buff = NULL;
 	read(fd, buff, 18);
-	printf("%s", buff);
+	printf("3\n");
+	printf("%s\n", buff);
+	printf("4\n");
 	parser_tga(tga, buff);
 	return (0);
 }
@@ -76,18 +78,35 @@ int			read_hdr(t_tga *tga, int fd)
 int			read_data(t_tga *tga, int fd)
 {
 	unsigned char buff;
-	const  char *str;
+	unsigned char str[100000];
 	int i;
 
+	//str = NULL;
+	printf("8\n");
 	i = 0;
 	while ((read(fd, &buff, 1) > 0))
 	{
+		printf("%d ", buff);
 		str[i] = buff;
 		i++;
 	}
+	printf("\n9\n");
+	printf("i = %d\n", i);
 	if (!(tga->file = (unsigned char *)malloc(sizeof(unsigned char ) * i + 1)))
 		return (0);
-	ft_strcpy((char *)tga->file, str);
+	printf("10\n");
+	int c = 0;
+	while (c < i)
+	{
+		tga->file[c] = str[c];
+	//	printf("%d ", tga->file[c]);
+		c++;
+	}
+	tga->file[c] = '\n';
+	c = 0;
+	while (c < i)
+		printf("%d", tga->file[c++]);
+	printf("\n");
 	return (1);
 }
 
@@ -104,7 +123,8 @@ int		get_data_tga(t_tga *tga, const char *path)
 		return (0);
 	if (!S_ISREG(sts.st_mode))
 		return (0);
-	read_hdr(tga, fd);
+	printf("2\n");
+//	read_hdr(tga, fd);
 	read_data(tga, fd);
 	close(fd);
 /*	count_n_malloc(tga, str);
@@ -124,6 +144,8 @@ int		get_data_tga(t_tga *tga, const char *path)
 
 int		tga_load(t_tga *tga, const char *path)
 {
-	get_data_tga(tga, path);
+	printf("1\n");
+	if (get_data_tga(tga, path) == 0)
+		printf("not a valid file or path\n");
 	return (0);
 }
