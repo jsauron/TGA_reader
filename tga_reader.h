@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/14 10:33:01 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/14 11:52:13 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct	s_tga
 {
 	char		*str;
 	char		*result;
-	int			*file;
+	unsigned char	*file;
 	int			nb_elem;
 	int			w;
 	int			h;
@@ -36,14 +36,17 @@ typedef struct	s_tga
 
 //rle.c
 void			stop_exec(char *msg);
-void			rle_uncompress(t_tga);
+void			rle_uncompress(t_tga *tga);
 //tga_parser_hdr.c
-void			parser_tga(t_tga tga, int *file);
-// tga_reader.c
+void			parser_tga(t_tga *tga, unsigned char *hdr);
+// tga_reader_file.c
 char			*hexdump(int fd);
-int				count_n_malloc(t_tga tga, char *str);
-int				get_data_tga(t_tga tga, const char *path);
-int				tga_load(t_tga tga, const char *path);
+int				count_n_malloc(t_tga *tga, char *str);
+int				get_data_tga(t_tga *tga, const char *path);
+int				tga_load(t_tga *tga, const char *path);
+int				read_hdr(t_tga *tga, int fd);
+int				get_data_tga(t_tga *tga, const char *path);
+
 //utils.c
 char	*cut_png_info(char *str);
 int		is_space(char c);
@@ -51,7 +54,7 @@ int		count_space(char *str);
 char	*split_space(char *str);
 int		hex_to_int(char s);
 int		hex_to_ascii(char c, char d);
-int		hex_to_dec(t_tga tga, char *str);
+int		hex_to_dec(t_tga *tga, char *str);
 
 
 

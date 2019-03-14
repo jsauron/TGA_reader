@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 10:12:34 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/14 10:17:15 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/14 11:55:37 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,17 @@ int		hex_to_ascii(char c, char d)
 	return (high + low);
 }
 
-int		hex_to_dec(t_tga tga, char *str)
+int		hex_to_dec(t_tga *tga, char *str)
 {
 	int		i;
 
 	i = 0;
 	while (str[i])
 	{
-		tga.file[tga.nb_elem] = str[i];
+		tga->file[tga->nb_elem] = str[i];
 		//printf(" str[%d] = %d ", i,  tga.file[tga.nb_elem]);
-		tga.file[tga.nb_elem] = hex_to_ascii(str[i], str[i + 1]);
-		tga.nb_elem++;
+		tga->file[tga->nb_elem] = hex_to_ascii(str[i], str[i + 1]);
+		tga->nb_elem++;
 		i += 2;
 	}
 	return (0);
