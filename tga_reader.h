@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/14 10:23:38 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/14 10:33:01 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct	s_tga
 void			stop_exec(char *msg);
 void			rle_uncompress(t_tga);
 //tga_parser_hdr.c
-void			parser_png(t_tga *tga, int *png);
+void			parser_tga(t_tga tga, int *file);
 // tga_reader.c
 char			*hexdump(int fd);
 int				count_n_malloc(t_tga tga, char *str);
