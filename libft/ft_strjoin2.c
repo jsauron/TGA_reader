@@ -6,7 +6,7 @@
 /*   By: lomasse <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 07:15:59 by lomasse           #+#    #+#             */
-/*   Updated: 2019/03/15 12:08:07 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/15 13:51:37 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ unsigned char		*ft_strjoin2(unsigned char *str, unsigned char *buff, int len_tot
 	//printf("malloc size : %d\n", len_total + len_buff + 1);
 	if (!(new = (unsigned char *)malloc(sizeof(unsigned char) * len_total + len_buff + 1)))
 		return (NULL);
-	while (++i < len_total)
+	if (len_total != 0)
+	{
+			while (++i < len_total)
 		new[i] = str[i];
+	}
 	int j = -1;
 	while (++j < len_buff && (i++ < (len_total + len_buff)))
 		new[i] = buff[j];

@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 13:13:31 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:08:54 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,26 @@ int			read_hdr(t_tga *tga, int fd)
 	return (0);
 }
 
-/*int			read_cm(t_tga *tga, int fd)
+int			read_cm(t_tga *tga, int fd)
 {
-	if (tga->color_type)
+	unsigned char	buff[tga->len_cm * (tga->bits_cm >> 3)];
+	int				i;
+
+	i = -1;
 	{
-		if (tga->bits_cm == 24)
-		{
-			if (!(tga->colormap = (unsigned char *)malloc(sizeof(unsigned char)
-					* tga->len_cm * (tga->bits_cm >> 3))))
-				return (0);
-		}
+		if (!(tga->colormap = (unsigned char *)malloc(sizeof(unsigned char)
+						* tga->len_cm * (tga->bits_cm >> 3))))
+			return (0);
+		read(fd, buff, (tga->len_cm * (tga->bits_cm >> 3)));
+		while (++i < (tga->len_cm * (tga->bits_cm >> 3)))
+			tga->colormap[i] = buff[i];
+		i = 0;
+		while (i < (tga->len_cm * (tga->bits_cm >> 3)))
+			printf("%d ", tga->colormap[i++]);
+		printf("\n");
 	}
-	else
-		printf("no palete\n");
 	return (1);
-}*/
+}
 
 int			read_data(t_tga *tga, int fd)
 {
@@ -56,12 +61,9 @@ int			read_data(t_tga *tga, int fd)
 		}
 		i += len;
 	}
-	printf("i = %d\n", i);
 	tga->file[i] = '\n';
-/*	int c = 0;
-	while (c < i)
-		printf("%d ", tga->file[c++]);
-	printf("\n");*/
+	tga->nb_elem = i;
+	printf("nb_elem = %d\n", tga->nb_elem);
 	return (1);
 }
 
@@ -79,6 +81,8 @@ int		get_data_tga(t_tga *tga, const char *path)
 	if (!S_ISREG(sts.st_mode))
 		return (0);
 	read_hdr(tga, fd);
+	printf(" size of cm = %d\n", tga->len_cm * (tga->bits_cm >> 3));
+	tga->color_type ? read_cm(tga, fd) : 0;
 	read_data(tga, fd);
 	close(fd);
 	return (1);
@@ -89,10 +93,10 @@ int		tga_load(t_tga *tga, const char *path)
 	printf("1\n");
 	if (get_data_tga(tga, path) == 0)
 		printf("not a valid file or path\n");
-		int c = 0;
-	while (c < 14448)
+	/*	int c = 0;
+		while (c < tga->nb_elem)
 		printf("%d ", tga->file[c++]);
-	printf("\n");
-	
+		printf("\n");
+		*/
 	return (0);
 }

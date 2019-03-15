@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 13:02:49 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:08:34 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,21 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
+
+
+typedef struct	s_pixel
+{
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+	unsigned char a;
+	struct s_pixel	*next;
+	struct s_pixel	*bf;
+}				t_pixel;
+
 typedef struct	s_tga
 {
+	t_pixel		pxl;
 	char		*str;
 	char		*result;
 	unsigned char	*colormap;
