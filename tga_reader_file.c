@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 16:18:48 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/15 17:22:37 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,12 @@ int		tga_load(t_tga *tga, const char *path)
 	printf("1\n");
 	if (get_data_tga(tga, path) == 0)
 		printf("not a valid file or path\n");
-	/*	int c = 0;
+		int c = 0;
 		while (c < tga->nb_elem)
 		printf("%d ", tga->file[c++]);
 		printf("\n");
-		*/
 	printf("YO\n");
 	create_lst(tga);
+	range_pxl(tga);
 	return (0);
 }
