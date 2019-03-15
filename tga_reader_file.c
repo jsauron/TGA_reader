@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 14:08:54 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/15 16:18:48 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int			read_cm(t_tga *tga, int fd)
 		if (!(tga->colormap = (unsigned char *)malloc(sizeof(unsigned char)
 						* tga->len_cm * (tga->bits_cm >> 3))))
 			return (0);
+		read(fd, buff, (tga->cm_begin));
 		read(fd, buff, (tga->len_cm * (tga->bits_cm >> 3)));
 		while (++i < (tga->len_cm * (tga->bits_cm >> 3)))
 			tga->colormap[i] = buff[i];
@@ -63,7 +64,7 @@ int			read_data(t_tga *tga, int fd)
 	}
 	tga->file[i] = '\n';
 	tga->nb_elem = i;
-	printf("nb_elem = %d\n", tga->nb_elem);
+	tga->file = (ft_strcmp((const char *)&tga->file[tga->nb_elem - 18], "TRUEVISION-XFILE.") == 0 ? (unsigned char *)ft_strsub((char const *)tga->file, 0, tga->nb_elem - 26) : tga->file);
 	return (1);
 }
 
@@ -98,5 +99,7 @@ int		tga_load(t_tga *tga, const char *path)
 		printf("%d ", tga->file[c++]);
 		printf("\n");
 		*/
+	printf("YO\n");
+	create_lst(tga);
 	return (0);
 }

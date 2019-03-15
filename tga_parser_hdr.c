@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 17:01:42 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 14:08:58 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/15 16:05:53 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ void	parser_tga(t_tga *tga, unsigned char *hdr)
 	tga->color_type = hdr[1];
 	tga->compress = hdr[2];
 	tga->bitspix = hdr[16];
-	tga->len_cm = hdr[5] + hdr[6];
+	tga->cm_begin = hdr[3] + (hdr[4] * 256);
+	tga->len_cm = hdr[5] + (hdr[6] * 256);
 	tga->alpha = hdr[17];
 	printf("6\n");
 
-	printf(" \n  w = %d, h = %d, bits_cm = %d, color_type = %d, compress = %d, len_cm = %d,  bit par pix = %d, alpha = %d\n",
+	printf(" \n  w = %d, h = %d, bits_cm = %d, color_type = %d, compress = %d, len_cm = %d,  bit par pix = %d, alpha = %d\n, cm_begin = %d\n",
 	tga->w, tga->h, tga->bits_cm, tga->color_type, tga->compress, tga->len_cm,
-			tga->bitspix, tga->alpha);
+			tga->bitspix, tga->alpha, tga->cm_begin);
 }

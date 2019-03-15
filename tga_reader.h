@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 14:10:46 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/15 16:03:36 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	s_tga
 	unsigned char	*colormap;
 	unsigned char	*file;
 	int			nb_elem;
+	int			cm_begin;
 	int			w;
 	int			h;
 	int			bits_cm;	//number of bits per palette entry 15,16,24,32
@@ -70,7 +71,12 @@ char	*split_space(char *str);
 int		hex_to_int(char s);
 int		hex_to_ascii(char c, char d);
 int		hex_to_dec(t_tga *tga, char *str);
-
+//lstpxl.c
+void	fill_maillon(t_tga *tga, t_pixel *curr, int maillon, int mode);
+void	create_maillon(t_pixel *curr);
+void	fill_lst(t_tga *tga, t_pixel *cm, int mode);
+void	init_lst(t_pixel *pxl);
+void	create_lst(t_tga *tga);
 
 
 #endif
