@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/14 11:52:13 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/15 13:02:49 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct	s_tga
 {
 	char		*str;
 	char		*result;
+	unsigned char	*colormap;
 	unsigned char	*file;
 	int			nb_elem;
 	int			w;

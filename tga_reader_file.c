@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 12:30:29 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/15 13:13:31 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,22 @@ int			read_hdr(t_tga *tga, int fd)
 	parser_tga(tga, buff);
 	return (0);
 }
+
+/*int			read_cm(t_tga *tga, int fd)
+{
+	if (tga->color_type)
+	{
+		if (tga->bits_cm == 24)
+		{
+			if (!(tga->colormap = (unsigned char *)malloc(sizeof(unsigned char)
+					* tga->len_cm * (tga->bits_cm >> 3))))
+				return (0);
+		}
+	}
+	else
+		printf("no palete\n");
+	return (1);
+}*/
 
 int			read_data(t_tga *tga, int fd)
 {
@@ -73,5 +89,10 @@ int		tga_load(t_tga *tga, const char *path)
 	printf("1\n");
 	if (get_data_tga(tga, path) == 0)
 		printf("not a valid file or path\n");
+		int c = 0;
+	while (c < 14448)
+		printf("%d ", tga->file[c++]);
+	printf("\n");
+	
 	return (0);
 }
