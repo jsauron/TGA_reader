@@ -6,36 +6,30 @@
 /*   By: lomasse <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 07:15:59 by lomasse           #+#    #+#             */
-/*   Updated: 2019/03/14 17:16:42 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/15 12:08:07 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strjoin2(char *dst, char const *src, size_t len, size_t len2)
+unsigned char		*ft_strjoin2(unsigned char *str, unsigned char *buff, int len_total, int len_buff)
 {
-	char	*new;
+	unsigned char	*new;
 	int		i;
-	int		j;
-	int		k;
 
-	if (!dst || !src)
+	i = -1;
+
+	if (!str || !buff)
 		return (NULL);
-	i = 0;
-	j = 0;
-	k = 0;
-	printf("malloc size : %lu\n", len + len2 + 1);
-	if (!(new = (char *)malloc(sizeof(char) * len + len2 + 1)))
+	//printf("malloc size : %d\n", len_total + len_buff + 1);
+	if (!(new = (unsigned char *)malloc(sizeof(unsigned char) * len_total + len_buff + 1)))
 		return (NULL);
-	new = ft_strncpy(new, dst, len);
-	new = ft_strncpy(&new[len], src, len2);
-	new[len + len2] = '\0';
-	printf("dst[%p] : %s\n", dst, dst);
-	len != 0 ? ft_strdel(&dst) : 0;
-	/*size_t onvaatt = -1;
-	printf("\nhere");
-	while (++onvaatt < (len + len2))
-		printf("=> %d ", new[onvaatt]);*/
-	printf("new : %s\n\n", new);
+	while (++i < len_total)
+		new[i] = str[i];
+	int j = -1;
+	while (++j < len_buff && (i++ < (len_total + len_buff)))
+		new[i] = buff[j];
+	new[len_total + len_buff] = '\0';
+	free(str);
 	return (new);
 }
