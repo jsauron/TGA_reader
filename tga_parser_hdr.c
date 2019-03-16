@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 17:01:42 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 16:05:53 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/16 11:02:58 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	parser_tga(t_tga *tga, unsigned char *hdr)
 	int i;
 
 	i = 0;
-	printf("5\n");
 	tga->w = hdr[12] + (hdr[13] * 256); // pas exactement ca mais a revoir 
 	tga->h = hdr[14]  + (hdr[15] * 256); // same
 	tga->bits_cm = hdr[7];
@@ -27,9 +26,7 @@ void	parser_tga(t_tga *tga, unsigned char *hdr)
 	tga->cm_begin = hdr[3] + (hdr[4] * 256);
 	tga->len_cm = hdr[5] + (hdr[6] * 256);
 	tga->alpha = hdr[17];
-	printf("6\n");
-
-	printf(" \n  w = %d, h = %d, bits_cm = %d, color_type = %d, compress = %d, len_cm = %d,  bit par pix = %d, alpha = %d\n, cm_begin = %d\n",
+	printf("w = %d\nh = %d\nbits_cm = %d\ncolor_type = %d\ncompress = %d\nlen_cm = %d\nbit par pix = %d\nalpha = %d\ncm_begin = %d\n",
 	tga->w, tga->h, tga->bits_cm, tga->color_type, tga->compress, tga->len_cm,
 			tga->bitspix, tga->alpha, tga->cm_begin);
 }

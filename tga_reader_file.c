@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 17:22:37 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/16 11:05:18 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int			read_hdr(t_tga *tga, int fd)
 	unsigned char	buff[18];
 
 	read(fd, buff, 18);
-	printf("4\n");
 	parser_tga(tga, buff);
 	return (0);
 }
@@ -37,6 +36,7 @@ int			read_cm(t_tga *tga, int fd)
 		while (++i < (tga->len_cm * (tga->bits_cm >> 3)))
 			tga->colormap[i] = buff[i];
 		i = 0;
+		printf("COLORMAP  :\n");
 		while (i < (tga->len_cm * (tga->bits_cm >> 3)))
 			printf("%d ", tga->colormap[i++]);
 		printf("\n");
@@ -82,7 +82,7 @@ int		get_data_tga(t_tga *tga, const char *path)
 	if (!S_ISREG(sts.st_mode))
 		return (0);
 	read_hdr(tga, fd);
-	printf(" size of cm = %d\n", tga->len_cm * (tga->bits_cm >> 3));
+	printf("size of cm = %d\n", tga->len_cm * (tga->bits_cm >> 3));
 	tga->color_type ? read_cm(tga, fd) : 0;
 	read_data(tga, fd);
 	close(fd);
@@ -91,14 +91,12 @@ int		get_data_tga(t_tga *tga, const char *path)
 
 int		tga_load(t_tga *tga, const char *path)
 {
-	printf("1\n");
 	if (get_data_tga(tga, path) == 0)
 		printf("not a valid file or path\n");
 		int c = 0;
 		while (c < tga->nb_elem)
 		printf("%d ", tga->file[c++]);
 		printf("\n");
-	printf("YO\n");
 	create_lst(tga);
 	range_pxl(tga);
 	return (0);
