@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:12:29 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/16 11:00:23 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/16 11:46:19 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,66 +19,12 @@ void	fill_maillon(t_tga *tga, t_pixel *curr, int maillon, int mode)
 	if (mode == 1)
 	{
 		pos = maillon * (tga->bits_cm >> 3);
-		if (tga->bits_cm == 32)
-		{
-			curr->a = tga->colormap[pos + 3];
-			curr->r = tga->colormap[pos + 2];
-			curr->g = tga->colormap[pos + 1];
-			curr->b = tga->colormap[pos];
-		}
-		else if (tga->bits_cm == 24)
-		{
-			curr->r = tga->colormap[pos + 2];
-			curr->g = tga->colormap[pos + 1];
-			curr->b = tga->colormap[pos];
-		}
-		else if (tga->bits_cm == 16 || tga->bits_cm == 15)
-		{
-			if (tga->bits_cm == 16)
-				curr->a = tga->colormap[pos + 1] & 0x80 ? 255 : 0;
-			curr->r = (tga->colormap[pos + 1] & 0x7C) * 255 / 31;
-			curr->g = (tga->colormap[pos + 1] & 0x3) << 6;
-			curr->g += (tga->colormap[pos] & 0xE0) >> 2;
-			curr->b = (tga->colormap[pos] & 0x1F) * 255 / 31;
-		}
-		else if (tga->bits_cm == 8)
-		{
-			curr->r = tga->colormap[pos];
-			curr->g = tga->colormap[pos];
-			curr->b = tga->colormap[pos];
-		}
+		read_color(curr, tga->bits_cm, tga->colormap, pos);
 	}
 	else
 	{
 		pos = maillon * (tga->bitspix >> 3) + tga->len_cm;
-		if (tga->bitspix == 32)
-		{
-			curr->a = tga->file[pos + 3];
-			curr->r = tga->file[pos + 2];
-			curr->g = tga->file[pos + 1];
-			curr->b = tga->file[pos];
-		}
-		else if (tga->bitspix == 24)
-		{
-			curr->r = tga->file[pos + 2];
-			curr->g = tga->file[pos + 1];
-			curr->b = tga->file[pos];
-		}
-		else if (tga->bitspix == 16 || tga->bitspix == 15)
-		{
-			if (tga->bitspix == 16)
-				curr->a = tga->file[pos + 1] & 0x80 ? 255 : 0;
-			curr->r = (tga->file[pos + 1] & 0x7C) * 255 / 31;
-			curr->g = (tga->file[pos + 1] & 0x3) << 6;
-			curr->g += (tga->file[pos] & 0xE0) >> 2;
-			curr->b = (tga->file[pos] & 0x1F) * 255 / 31;
-		}
-		else if (tga->bitspix == 8)
-		{
-			curr->r = tga->file[pos];
-			curr->g = tga->file[pos];
-			curr->b = tga->file[pos];
-		}
+		read_color(curr, tga->bitspix, tga->file, pos);
 	}
 }
 

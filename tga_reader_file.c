@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/16 11:32:45 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/16 11:47:14 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,14 @@ int		tga_load(t_tga *tga, const char *path)
 	while (c < tga->nb_elem)
 		printf("%d ", tga->file[c++]);
 	printf("\n");
-	if (tga->compress >= 8)
+	/*if (tga->compress >= 8)
 	{
 		rle_uncompress(tga);
 	}
 	else
-	{
+	{*/
 		create_lst(tga);
 		range_pxl(tga);
-	}
+	//}
 	return (0);
 }
