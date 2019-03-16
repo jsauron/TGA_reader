@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 17:15:24 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/16 11:32:03 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include "libft/libft.h"
 #include <fcntl.h>
 #include <sys/stat.h>
-
-
 
 typedef struct	s_pixel
 {
@@ -62,7 +60,6 @@ int				get_data_tga(t_tga *tga, const char *path);
 int				tga_load(t_tga *tga, const char *path);
 int				read_hdr(t_tga *tga, int fd);
 int				get_data_tga(t_tga *tga, const char *path);
-
 //utils.c
 char	*cut_png_info(char *str);
 int		is_space(char c);

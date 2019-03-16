@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/16 11:05:18 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/16 11:32:45 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int			read_data(t_tga *tga, int fd)
 	}
 	tga->file[i] = '\n';
 	tga->nb_elem = i;
-	tga->file = (ft_strcmp((const char *)&tga->file[tga->nb_elem - 18], "TRUEVISION-XFILE.") == 0 ? (unsigned char *)ft_strsub((char const *)tga->file, 0, tga->nb_elem - 26) : tga->file);
+	tga->file = (ft_strcmp((const char *)&tga->file[tga->nb_elem - 18],
+				"TRUEVISION-XFILE.") == 0 ? 
+			(unsigned char *)ft_strsub((char const *)tga->file,
+				0, tga->nb_elem - 26) : tga->file);
 	return (1);
 }
 
@@ -83,6 +86,7 @@ int		get_data_tga(t_tga *tga, const char *path)
 		return (0);
 	read_hdr(tga, fd);
 	printf("size of cm = %d\n", tga->len_cm * (tga->bits_cm >> 3));
+	tga->compress ? 0 : printf("pas de donne image");
 	tga->color_type ? read_cm(tga, fd) : 0;
 	read_data(tga, fd);
 	close(fd);
@@ -93,11 +97,18 @@ int		tga_load(t_tga *tga, const char *path)
 {
 	if (get_data_tga(tga, path) == 0)
 		printf("not a valid file or path\n");
-		int c = 0;
-		while (c < tga->nb_elem)
+	int c = 0;
+	while (c < tga->nb_elem)
 		printf("%d ", tga->file[c++]);
-		printf("\n");
-	create_lst(tga);
-	range_pxl(tga);
+	printf("\n");
+	if (tga->compress >= 8)
+	{
+		rle_uncompress(tga);
+	}
+	else
+	{
+		create_lst(tga);
+		range_pxl(tga);
+	}
 	return (0);
 }
