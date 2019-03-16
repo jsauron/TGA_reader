@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 11:33:52 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/16 11:46:40 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/16 16:02:06 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,5 @@ void	read_color(t_pixel *curr, int bits, unsigned char *file, int pos)
 		curr->b = file[pos];
 	}
 }
+
+//void	color_32(t_pixel)

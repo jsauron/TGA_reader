@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/16 11:43:54 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/16 17:07:50 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct	s_tga
 	t_pixel		*cm;
 	t_pixel		*pxl;
 	char		*str;
-	char		*result;
 	unsigned char	*colormap;
 	unsigned char	*file;
 	int			nb_elem;
@@ -80,4 +79,6 @@ void	fill_pxl(t_tga *tga, t_pixel *pxl);
 void	range_pxl(t_tga *tga);
 //tga_type_read.c
 void	read_color(t_pixel *curr, int bits, unsigned char *file, int pos);
+//rle_color.c
+int		loadnew(int bpp, unsigned char *n, unsigned char *file, int mode);
 #endif

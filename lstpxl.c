@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 14:12:29 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/16 11:46:19 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/16 14:23:04 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	create_lst(t_tga *tga)
 	}
 	else
 	{
+		printf("la de dans \n");
 		tga->pxl = malloc(sizeof(t_pixel));
 		init_lst(tga->pxl);
 		fill_lst(tga, tga->pxl, 2);
