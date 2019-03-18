@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/16 17:07:50 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/18 15:38:19 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int				count_n_malloc(t_tga *tga, char *str);
 int				get_data_tga(t_tga *tga, const char *path);
 int				tga_load(t_tga *tga, const char *path);
 int				read_hdr(t_tga *tga, int fd);
+int				check_tv_signature(t_tga *tga);
 int				get_data_tga(t_tga *tga, const char *path);
 //utils.c
 char	*cut_png_info(char *str);

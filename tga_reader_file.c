@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/16 16:53:18 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/18 16:06:03 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,32 @@ int			read_data(t_tga *tga, int fd)
 	}
 	tga->file[i] = '\n';
 	tga->nb_elem = i;
+	printf("i = %d\n", i);
+	printf("TRUEVISION = %d\n", ft_strcmp((const char *)&tga->file[tga->nb_elem - 18], "TRUEVISION-XFILE."));
+	printf("file-18 = %c, %c, %c, %c, %c, %c\n", tga->file[tga->nb_elem - 18], tga->file[tga->nb_elem - 17], tga->file[tga->nb_elem - 16], tga->file[tga->nb_elem - 15], tga->file[tga->nb_elem - 14], tga->file[tga->nb_elem - 13]);
 	tga->file = (ft_strcmp((const char *)&tga->file[tga->nb_elem - 18],
 				"TRUEVISION-XFILE.") == 0 ? 
-			(unsigned char *)ft_strsub((char const *)tga->file,
+/*	if (!check_tv_signature(tga))
+		tga->file = */(unsigned char *)ft_strsub((char const *)tga->file,
 				0, tga->nb_elem - 26) : tga->file);
 	return (1);
+}
+
+int		check_tv_signature(t_tga *tga)
+{
+	int	check;
+	int i;
+
+	i = 0;
+	check = tga->file[tga->nb_elem - 26];
+	while (i < 26)
+	{
+		if (check == 'T' && check + 1 == 'R' && check + 2 == 'U' && check + 3 == 'E')
+			return (1);
+		check++;
+		i++;
+	}
+	return (0);
 }
 
 int		get_data_tga(t_tga *tga, const char *path)
@@ -103,7 +124,7 @@ int		tga_load(t_tga *tga, const char *path)
 	printf("\n");
 	if (tga->compress >= 8)
 	{
-		printf("AAAAAAAAAAAAAAAHHH\n");
+		printf("RLE file\n");
 		rle_uncompress(tga);
 	}
 	create_lst(tga);
