@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/18 15:38:19 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/19 12:06:21 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
+
 typedef struct	s_pixel
 {
 	unsigned char r;
 	unsigned char g;
 	unsigned char b;
 	unsigned char a;
-	struct s_pixel	*next;
-	struct s_pixel	*bf;
+//	struct s_pixel	*next;
+//	struct s_pixel	*bf;
 }				t_pixel;
 
 typedef struct	s_tga
@@ -50,16 +51,16 @@ typedef struct	s_tga
 //rle.c
 void			stop_exec(char *msg);
 void			rle_uncompress(t_tga *tga);
-//tga_parser_hdr.c
-void			parser_tga(t_tga *tga, unsigned char *hdr);
 // tga_reader_file.c
-char			*hexdump(int fd);
+void			hdr_parser(t_tga *tga, unsigned char *hdr);
 int				count_n_malloc(t_tga *tga, char *str);
 int				get_data_tga(t_tga *tga, const char *path);
 int				tga_load(t_tga *tga, const char *path);
 int				read_hdr(t_tga *tga, int fd);
 int				check_tv_signature(t_tga *tga);
 int				get_data_tga(t_tga *tga, const char *path);
+int				read_data(t_tga *tga, int fd);
+int				read_cm(t_tga *tga, int fd);
 //utils.c
 char	*cut_png_info(char *str);
 int		is_space(char c);
@@ -68,18 +69,12 @@ char	*split_space(char *str);
 int		hex_to_int(char s);
 int		hex_to_ascii(char c, char d);
 int		hex_to_dec(t_tga *tga, char *str);
-//lstpxl.c
-void	fill_maillon(t_tga *tga, t_pixel *curr, int maillon, int mode);
-void	create_maillon(t_pixel *curr);
-void	fill_lst(t_tga *tga, t_pixel *cm, int mode);
-void	init_lst(t_pixel *pxl);
-void	create_lst(t_tga *tga);
-//set_pxl_color.c
-void	fill_value(t_pixel *pxl, t_pixel *pos);
-void	fill_pxl(t_tga *tga, t_pixel *pxl);
-void	range_pxl(t_tga *tga);
+//set_data_pxl.c.c
+void	fill_pxl(t_tga *tga, int i, int mode);
+void	fill_data(t_tga *tga, int mode);
+void	create_pxl(t_tga *tga);
 //tga_type_read.c
-void	read_color(t_pixel *curr, int bits, unsigned char *file, int pos);
+void	read_color(t_pixel *tab, int bits, unsigned char *file, int pos);
 //rle_color.c
 int		loadnew(int bpp, unsigned char *n, unsigned char *file, int mode);
 #endif

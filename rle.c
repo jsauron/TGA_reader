@@ -6,7 +6,7 @@
 /*   By: lomasse <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 18:35:19 by lomasse           #+#    #+#             */
-/*   Updated: 2019/03/18 16:24:42 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/19 10:33:18 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,9 @@ void			rle_uncompress(t_tga *tga)
 					index += 4;
 					index2 = (4 * repet);
 					tmp--;
-				//	printf("Index  : %d\n", index);
-			//		printf("Index2 : %d\n", index2);
-					//printf("Repet  : %d\n", repet);
 				}
 				index += 1;
 			}
-	//		printf("repet2 = %d\n", repet);
 		}
 		int c;
 		c = 0;

@@ -1,24 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tga_reader_file.c                                  :+:      :+:    :+:   */
+/*   read_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/13 14:08:27 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/18 16:06:03 by jsauron          ###   ########.fr       */
+/*   Created: 2019/03/19 12:02:10 by jsauron           #+#    #+#             */
+/*   Updated: 2019/03/19 12:09:29 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tga_reader.h"
 
-int			read_hdr(t_tga *tga, int fd)
+int		read_hdr(t_tga *tga, int fd)
 {
 	unsigned char	buff[18];
 
 	read(fd, buff, 18);
-	parser_tga(tga, buff);
+	hdr_parser(tga, buff);
 	return (0);
+}
+
+void	hdr_parser(t_tga *tga, unsigned char *hdr)
+{
+	int i;
+
+	i	= 0;
+	tga->w = hdr[12] + (hdr[13] * 256); // pas exactement ca mais a revoir
+	tga->h = hdr[14]  + (hdr[15] * 256); // same
+	tga->bits_cm = hdr[7];
+	tga->color_type = hdr[1];
+	tga->compress = hdr[2];
+	tga->bitspix = hdr[16];
+	tga->cm_begin = hdr[3] + (hdr[4] * 256);
+	tga->len_cm = hdr[5] + (hdr[6] * 256);
+	tga->alpha = hdr[17];
+	printf("w = %d\nh = %d\nbits_cm = %d\ncolor_type = %d\ncompress = %d\nlen_cm = %d\nbit par pix = %d\nalpha = %d\ncm_begin = %d\n",
+			tga->w, tga->h, tga->bits_cm, tga->color_type, tga->compress, tga->len_cm,
+			tga->bitspix, tga->alpha, tga->cm_begin);
 }
 
 int			read_cm(t_tga *tga, int fd)
@@ -46,14 +65,14 @@ int			read_cm(t_tga *tga, int fd)
 
 int			read_data(t_tga *tga, int fd)
 {
-	unsigned char buff[100];
+	unsigned char buff[100000];
 	int				len;
 	int i;
 
 	i = 0;
 	if (!(tga->file = (unsigned char *)ft_strdup("")))
 		exit(EXIT_FAILURE); // recup error
-	while (((len = read(fd, &buff, 100)) > 0))
+	while (((len = read(fd, &buff, 100000)) > 0))
 	{
 		if (!(tga->file = (unsigned char *)ft_strjoin2(tga->file, buff, i, len)))
 		{
@@ -69,9 +88,9 @@ int			read_data(t_tga *tga, int fd)
 	printf("file-18 = %c, %c, %c, %c, %c, %c\n", tga->file[tga->nb_elem - 18], tga->file[tga->nb_elem - 17], tga->file[tga->nb_elem - 16], tga->file[tga->nb_elem - 15], tga->file[tga->nb_elem - 14], tga->file[tga->nb_elem - 13]);
 	tga->file = (ft_strcmp((const char *)&tga->file[tga->nb_elem - 18],
 				"TRUEVISION-XFILE.") == 0 ? 
-/*	if (!check_tv_signature(tga))
-		tga->file = */(unsigned char *)ft_strsub((char const *)tga->file,
-				0, tga->nb_elem - 26) : tga->file);
+			/*	if (!check_tv_signature(tga))
+				tga->file = */(unsigned char *)ft_strsub((char const *)tga->file,
+					0, tga->nb_elem - 26) : tga->file);
 	return (1);
 }
 
@@ -89,45 +108,5 @@ int		check_tv_signature(t_tga *tga)
 		check++;
 		i++;
 	}
-	return (0);
-}
-
-int		get_data_tga(t_tga *tga, const char *path)
-{
-	int		fd;
-	struct	stat sts;
-	int		i;
-
-	i = 0;
-	if ((fd = open(path, O_RDONLY)) == -1)
-		return (0);
-	if (fstat(fd, &sts) != 0)
-		return (0);
-	if (!S_ISREG(sts.st_mode))
-		return (0);
-	read_hdr(tga, fd);
-	printf("size of cm = %d\n", tga->len_cm * (tga->bits_cm >> 3));
-	tga->compress ? 0 : printf("pas de donne image");
-	tga->color_type ? read_cm(tga, fd) : 0;
-	read_data(tga, fd);
-	close(fd);
-	return (1);
-}
-
-int		tga_load(t_tga *tga, const char *path)
-{
-	if (get_data_tga(tga, path) == 0)
-		printf("not a valid file or path\n");
-	int c = 0;
-	while (c < tga->nb_elem)
-		printf("%d ", tga->file[c++]);
-	printf("\n");
-	if (tga->compress >= 8)
-	{
-		printf("RLE file\n");
-		rle_uncompress(tga);
-	}
-	create_lst(tga);
-	range_pxl(tga);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lomasse <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 18:08:00 by lomasse           #+#    #+#             */
-/*   Updated: 2019/03/14 12:57:12 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/19 12:09:40 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,45 @@ void		stop_exec(char *msg)
 {
 	ft_putstr(msg);
 	exit(0);
+}
+
+int		get_data_tga(t_tga *tga, const char *path)
+{
+	int		fd;
+	struct	stat sts;
+	int		i;
+
+	i = 0;
+	if ((fd = open(path, O_RDONLY)) == -1)
+		return (0);
+	if (fstat(fd, &sts) != 0)
+		return (0);
+	if (!S_ISREG(sts.st_mode))
+		return (0);
+	read_hdr(tga, fd);
+	printf("size of cm = %d\n", tga->len_cm * (tga->bits_cm >> 3));
+	tga->compress ? 0 : printf("pas de donne image");
+	tga->color_type ? read_cm(tga, fd) : 0;
+	read_data(tga, fd);
+	close(fd);
+	return (1);
+}
+
+int		tga_load(t_tga *tga, const char *path)
+{
+	if (get_data_tga(tga, path) == 0)
+		printf("not a valid file or path\n");
+	/*int c = 0;
+	  while (c < tga->nb_elem)
+	  printf("%d ", tga->file[c++]);
+	  printf(	"\n");*/
+	if (tga->compress >= 8)
+	{
+		printf("RLE file\n");
+		rle_uncompress(tga);
+	}
+	create_pxl(tga);
+	return (0);
 }
 
 int main(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 16:47:12 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/15 17:24:33 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/19 11:54:14 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ void		fill_pxl(t_tga *tga, t_pixel *pxl)
 	curr = pxl;
 	int	check;
 	check=0;
-	while(curr->next != NULL)
+	/*while(curr->next != NULL)
 	{
 		printf("[%d][%d][%d][%d] \t%d\n", curr->a, curr->r, curr->g, curr->b, check);
 		check++;
 		curr = curr->next;
-	}
+	}*/
 }
 
 void		range_pxl(t_tga *tga)
@@ -71,7 +71,6 @@ void		range_pxl(t_tga *tga)
 	if (tga->len_cm != 0)
 	{
 		tga->pxl = malloc(sizeof(t_pixel));
-		init_lst(tga->pxl);
 		fill_pxl(tga, tga->pxl);
 	}
 }
