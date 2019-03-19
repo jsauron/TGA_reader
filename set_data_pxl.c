@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lstpxl.c                                           :+:      :+:    :+:   */
+/*   set_data_pxl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/15 14:12:29 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/19 12:15:12 by jsauron          ###   ########.fr       */
+/*   Created: 2019/03/19 12:27:45 by jsauron           #+#    #+#             */
+/*   Updated: 2019/03/19 13:33:13 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	fill_pxl(t_tga *tga, int i, int mode)
 	{
 		pos = i * (tga->bits_cm >> 3);
 		read_color(&tga->cm[i], tga->bits_cm, tga->colormap, pos);
+		printf("PAL A[%d] R[%d] G[%d] B[%d]  %d\n", tga->cm[i].a, tga->cm[i].r,  tga->cm[i].g, tga->cm[i].b, i);
 	}
 	else
 	{
@@ -31,7 +32,6 @@ void	fill_pxl(t_tga *tga, int i, int mode)
 void	fill_data(t_tga *tga, int mode)
 {
 	int		i;
-//	t_pixel	*pxl;
 	int		limit;
 
 	i = 0;
@@ -44,24 +44,18 @@ void	fill_data(t_tga *tga, int mode)
 	}
 	if (mode == 2)
 		printf("PAS DE PALETTE\n");
-	i = 0;
-	while (i < limit)
-	{
-		printf("A[%d]R[%d]G[%d]B[%d]\n", tga->pxl[i].a, tga->pxl[i].r, tga->pxl[i].g, tga->pxl[i].b);
-		i++;
-	}
 }
 
 void	create_pxl(t_tga *tga)
 {
+	tga->pxl = malloc(sizeof(t_pixel) * (tga->w * tga->h));
 	if (tga->color_type)
 	{
 		tga->cm = malloc(sizeof(t_pixel) * tga->len_cm);
 		fill_data(tga, 1);
+		printf("kaka\n");
+		range_pxl(tga);
 	}
 	else
-	{
-		tga->pxl = malloc(sizeof(t_pixel) * (tga->w * tga->h));
 		fill_data(tga, 2);
-	}
 }

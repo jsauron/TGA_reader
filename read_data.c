@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 12:02:10 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/19 12:09:29 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/19 13:27:42 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,19 @@ int			read_cm(t_tga *tga, int fd)
 	i = -1;
 	{
 		if (!(tga->colormap = (unsigned char *)malloc(sizeof(unsigned char)
-						* tga->len_cm * (tga->bits_cm >> 3))))
+						* tga->len_cm * 4)))
 			return (0);
 		read(fd, buff, (tga->cm_begin));
 		read(fd, buff, (tga->len_cm * (tga->bits_cm >> 3)));
 		while (++i < (tga->len_cm * (tga->bits_cm >> 3)))
 			tga->colormap[i] = buff[i];
-		i = 0;
-		printf("COLORMAP  :\n");
-		while (i < (tga->len_cm * (tga->bits_cm >> 3)))
-			printf("%d ", tga->colormap[i++]);
-		printf("\n");
 	}
+	i = 0;
+	printf("PALETTE\n");
+	while (i ++ < (tga->len_cm * (tga->bits_cm >> 3)))
+		printf("%d ", tga->colormap[i]);
+	printf("\n");
+
 	return (1);
 }
 

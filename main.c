@@ -6,7 +6,7 @@
 /*   By: lomasse <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 18:08:00 by lomasse           #+#    #+#             */
-/*   Updated: 2019/03/19 12:09:40 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/19 13:50:58 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ int		tga_load(t_tga *tga, const char *path)
 {
 	if (get_data_tga(tga, path) == 0)
 		printf("not a valid file or path\n");
-	/*int c = 0;
+	int c = 0;
 	  while (c < tga->nb_elem)
 	  printf("%d ", tga->file[c++]);
-	  printf(	"\n");*/
+	  printf("\n");
 	if (tga->compress >= 8)
 	{
 		printf("RLE file\n");
@@ -71,6 +71,13 @@ int main(int argc, char **argv)
 		if(!(tga = (t_tga *)malloc(sizeof(t_tga))))
 			return (0);
 		tga_load(tga, argv[1]);
+	}
+	printf("la\n");
+	int i = 0;
+	while (i < tga->w * tga->h)
+	{
+		printf("A[%d] R[%d] G[%d] B[%d] %d\n", tga->pxl[i].a, tga->pxl[i].r,  tga->pxl[i].g,  tga->pxl[i].b, i);
+	i++;
 	}
 	return (1);
 }

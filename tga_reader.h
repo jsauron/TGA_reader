@@ -6,7 +6,7 @@
 /*   By: jsauron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 13:54:50 by jsauron           #+#    #+#             */
-/*   Updated: 2019/03/19 12:06:21 by jsauron          ###   ########.fr       */
+/*   Updated: 2019/03/19 12:54:16 by jsauron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,13 @@ int				check_tv_signature(t_tga *tga);
 int				get_data_tga(t_tga *tga, const char *path);
 int				read_data(t_tga *tga, int fd);
 int				read_cm(t_tga *tga, int fd);
-//utils.c
-char	*cut_png_info(char *str);
-int		is_space(char c);
-int		count_space(char *str);
-char	*split_space(char *str);
-int		hex_to_int(char s);
-int		hex_to_ascii(char c, char d);
-int		hex_to_dec(t_tga *tga, char *str);
+
+//set_pxl_color.c
+void	range_pxl(t_tga *tga);
+
 //set_data_pxl.c.c
 void	fill_pxl(t_tga *tga, int i, int mode);
+void	fille_pxl_from_cm(t_tga *tga);
 void	fill_data(t_tga *tga, int mode);
 void	create_pxl(t_tga *tga);
 //tga_type_read.c
